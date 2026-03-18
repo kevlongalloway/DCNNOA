@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DCNNOA — Washington DC Chapter</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,400&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #1a1714;
+    --ink-soft: #3d3830;
+    --mid: #6b6259;
+    --warm-gray: #9e958b;
+    --sand: #e8e0d4;
+    --paper: #f5f0e8;
+    --cream: #faf7f2;
+    --white: #ffffff;
+    --navy: #182848;
+    --sea: #1e3a5f;
+    --teal: #2a6f6f;
+    --rust: #b44c3a;
+    --amber: #c78c3c;
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Instrument Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; }
+
+  /* ===== TOP BAR ===== */
+  .topbar {
+    background: var(--navy);
+    color: rgba(255,255,255,0.7);
+    font-size: 11px; letter-spacing: 0.5px;
+    padding: 8px 32px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .topbar a { color: rgba(255,255,255,0.85); text-decoration: none; }
+  .topbar a:hover { color: #fff; }
+
+  /* ===== NAV ===== */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--cream);
+    border-bottom: 1px solid var(--sand);
+    transition: box-shadow 0.3s;
+  }
+  header.scrolled { box-shadow: 0 2px 24px rgba(26,23,20,0.06); }
+  .nav-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 32px; height: 68px;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none; color: var(--ink);
+  }
+  .nav-logo-mark {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-family: var(--serif);
+    font-weight: 700; font-size: 16px; letter-spacing: -0.5px;
+  }
+  .nav-logo-text { line-height: 1.15; }
+  .nav-logo-text strong {
+    display: block; font-family: var(--serif);
+    font-size: 16px; font-weight: 700; letter-spacing: -0.3px;
+  }
+  .nav-logo-text span {
+    display: block; font-size: 10px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--mid); font-weight: 500;
+  }
+  .nav-links { display: flex; gap: 4px; align-items: center; }
+  .nav-links a {
+    text-decoration: none; font-size: 13px; font-weight: 500;
+    color: var(--ink-soft); padding: 8px 14px; border-radius: 6px;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover { background: var(--sand); color: var(--ink); }
+  .nav-donate {
+    background: var(--rust) !important; color: #fff !important;
+    font-weight: 600 !important; padding: 10px 22px !important;
+    border-radius: 8px !important;
+  }
+  .nav-donate:hover { background: #9e3f2e !important; }
+
+  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+  .hamburger svg { width: 24px; height: 24px; stroke: var(--ink); }
+
+  /* ===== HERO ===== */
+  .hero {
+    max-width: 1280px; margin: 0 auto;
+    padding: 80px 32px 64px;
+    display: grid; grid-template-columns: 1fr 420px; gap: 64px;
+    align-items: end;
+  }
+  .hero-text { padding-bottom: 20px; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--sea);
+    margin-bottom: 28px;
+  }
+  .hero-eyebrow::before {
+    content: ''; width: 32px; height: 2px; background: var(--sea);
+  }
+  .hero h1 {
+    font-family: var(--serif); font-weight: 900;
+    font-size: clamp(42px, 5.5vw, 72px);
+    line-height: 1.02; letter-spacing: -1.5px;
+    color: var(--ink);
+    margin-bottom: 28px;
+  }
+  .hero h1 em {
+    font-style: italic; font-weight: 400;
+    color: var(--sea);
+  }
+  .hero-desc {
+    font-size: 18px; line-height: 1.65; color: var(--mid);
+    max-width: 520px; margin-bottom: 40px;
+  }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 30px; font-family: var(--sans);
+    font-size: 14px; font-weight: 600;
+    border-radius: 8px; text-decoration: none;
+    border: none; cursor: pointer;
+    transition: all 0.25s;
+  }
+  .btn-primary { background: var(--navy); color: #fff; }
+  .btn-primary:hover { background: var(--sea); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(24,40,72,0.2); }
+  .btn-secondary { background: transparent; color: var(--ink); border: 1.5px solid var(--sand); }
+  .btn-secondary:hover { border-color: var(--ink); }
+
+  .hero-photo-stack {
+    position: relative; height: 520px;
+  }
+  .hero-photo-main {
+    position: absolute; top: 0; right: 0;
+    width: 340px; height: 440px;
+    border-radius: 12px; overflow: hidden;
+    box-shadow: 0 20px 60px rgba(26,23,20,0.12);
+  }
+  .hero-photo-main img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-photo-accent {
+    position: absolute; bottom: 0; left: 0;
+    width: 200px; height: 200px;
+    border-radius: 12px; overflow: hidden;
+    border: 5px solid var(--cream);
+    box-shadow: 0 10px 40px rgba(26,23,20,0.1);
+  }
+  .hero-photo-accent img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-stat-float {
+    position: absolute; top: 380px; right: 300px;
+    background: var(--white);
+    border-radius: 12px; padding: 20px 24px;
+    box-shadow: 0 8px 32px rgba(26,23,20,0.08);
+    text-align: center; min-width: 130px;
+    border: 1px solid var(--sand);
+  }
+  .hero-stat-float strong {
+    display: block; font-family: var(--serif);
+    font-size: 32px; font-weight: 900; color: var(--rust);
+    line-height: 1;
+  }
+  .hero-stat-float span {
+    font-size: 11px; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--mid); font-weight: 600;
+  }
+
+  /* ===== IMPACT STRIP ===== */
+  .impact-strip {
+    background: var(--navy);
+    padding: 0;
+    overflow: hidden;
+  }
+  .impact-scroll {
+    display: flex;
+    animation: marquee 25s linear infinite;
+  }
+  .impact-scroll-set {
+    display: flex; flex-shrink: 0;
+  }
+  .impact-item {
+    display: flex; align-items: center; gap: 24px;
+    padding: 28px 56px;
+    white-space: nowrap;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+  .impact-item strong {
+    font-family: var(--serif); font-size: 28px; font-weight: 900;
+    color: #fff; letter-spacing: -0.5px;
+  }
+  .impact-item span {
+    font-size: 12px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: rgba(255,255,255,0.5);
+    font-weight: 500;
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ===== SECTIONS SHARED ===== */
+  .section { padding: 100px 32px; max-width: 1280px; margin: 0 auto; }
+  .section-full { padding: 100px 0; }
+  .section-label {
+    font-size: 12px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--sea);
+    margin-bottom: 12px;
+  }
+  .section-heading {
+    font-family: var(--serif); font-weight: 900;
+    font-size: clamp(30px, 3.5vw, 48px);
+    line-height: 1.08; letter-spacing: -1px;
+    margin-bottom: 20px; color: var(--ink);
+  }
+  .section-heading em { font-style: italic; font-weight: 400; }
+  .section-sub {
+    font-size: 16px; line-height: 1.65;
+    color: var(--mid); max-width: 560px;
+  }
+
+  /* ===== MISSION ===== */
+  .mission-bg { background: var(--paper); }
+  .mission-grid {
+    display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px;
+    align-items: start;
+  }
+  .mission-content { padding-top: 12px; }
+  .mission-quote {
+    font-family: var(--serif); font-style: italic;
+    font-size: 22px; line-height: 1.55; color: var(--ink);
+    margin: 32px 0; padding-left: 24px;
+    border-left: 3px solid var(--rust);
+  }
+  .mission-body p {
+    font-size: 15.5px; line-height: 1.75; color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+  .mission-photo-wrap {
+    position: relative;
+  }
+  .mission-photo {
+    border-radius: 16px; overflow: hidden;
+    aspect-ratio: 4/5;
+  }
+  .mission-photo img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .mission-badge {
+    position: absolute; bottom: -24px; left: -24px;
+    background: var(--navy); color: #fff;
+    padding: 20px 28px; border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(24,40,72,0.18);
+  }
+  .mission-badge strong {
+    display: block; font-family: var(--serif);
+    font-size: 22px; font-weight: 900;
+  }
+  .mission-badge span {
+    font-size: 11px; letter-spacing: 1.2px;
+    text-transform: uppercase; opacity: 0.7;
+  }
+
+  /* ===== SCHOLARSHIP ===== */
+  .scholarship-wrap {
+    background: var(--white);
+    border: 1px solid var(--sand);
+    border-radius: 20px;
+    padding: 64px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+    align-items: center;
+  }
+  .scholarship-big-num {
+    font-family: var(--serif); font-size: clamp(56px, 7vw, 88px);
+    font-weight: 900; color: var(--ink);
+    line-height: 0.9; letter-spacing: -3px;
+    margin-bottom: 12px;
+  }
+  .scholarship-big-num span { color: var(--rust); }
+  .scholarship-sub {
+    font-size: 15px; line-height: 1.65; color: var(--mid);
+    margin-bottom: 28px;
+  }
+  .scholarship-right p {
+    font-size: 16px; line-height: 1.7; color: var(--ink-soft);
+    margin-bottom: 24px;
+  }
+  .status-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 600;
+    padding: 10px 20px; border-radius: 100px;
+    background: #fef2f1; color: var(--rust);
+    border: 1px solid rgba(180,76,58,0.15);
+  }
+  .status-badge::before {
+    content: ''; width: 8px; height: 8px;
+    background: var(--rust); border-radius: 50%;
+  }
+
+  /* ===== EVENTS ===== */
+  .events-bg { background: var(--paper); }
+  .event-card {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border-radius: 20px; overflow: hidden;
+    background: var(--white);
+    border: 1px solid var(--sand);
+  }
+  .event-photo { position: relative; min-height: 420px; }
+  .event-photo img {
+    width: 100%; height: 100%; object-fit: cover;
+    position: absolute; inset: 0;
+  }
+  .event-photo-date {
+    position: absolute; top: 24px; left: 24px;
+    background: var(--white);
+    border-radius: 10px; padding: 12px 16px;
+    text-align: center; line-height: 1.1;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  }
+  .event-photo-date strong {
+    display: block; font-family: var(--serif);
+    font-size: 26px; font-weight: 900; color: var(--rust);
+  }
+  .event-photo-date span {
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1px; color: var(--mid);
+  }
+  .event-body {
+    padding: 56px; display: flex;
+    flex-direction: column; justify-content: center;
+  }
+  .event-body h3 {
+    font-family: var(--serif); font-size: 28px;
+    font-weight: 700; line-height: 1.2;
+    letter-spacing: -0.5px; margin-bottom: 20px;
+  }
+  .event-body p {
+    font-size: 15px; line-height: 1.75; color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+  .event-highlight {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #f0f7f0; color: var(--teal);
+    padding: 8px 16px; border-radius: 8px;
+    font-size: 14px; font-weight: 600;
+    width: fit-content;
+  }
+
+  /* ===== OFFICERS ===== */
+  .officers-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 20px; margin-top: 48px;
+  }
+  .officer {
+    background: var(--white);
+    border: 1px solid var(--sand);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .officer:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(26,23,20,0.08);
+  }
+  .officer-img { aspect-ratio: 1; overflow: hidden; }
+  .officer-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.5s;
+  }
+  .officer:hover .officer-img img { transform: scale(1.04); }
+  .officer-info { padding: 18px 20px; }
+  .officer-info h4 {
+    font-family: var(--serif); font-size: 15px;
+    font-weight: 700; letter-spacing: -0.2px;
+    margin-bottom: 3px;
+  }
+  .officer-info p {
+    font-size: 12px; color: var(--warm-gray);
+    font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  /* ===== TIMELINE ===== */
+  .timeline-bg { background: var(--navy); color: #fff; }
+  .timeline-bg .section-label { color: rgba(255,255,255,0.4); }
+  .timeline-bg .section-heading { color: #fff; }
+  .timeline-bg .section-heading em { color: rgba(255,255,255,0.5); }
+
+  .tl-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; margin-top: 56px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 16px; overflow: hidden;
+  }
+  .tl-cell {
+    padding: 40px 36px;
+    background: var(--navy);
+    transition: background 0.3s;
+  }
+  .tl-cell:hover { background: rgba(255,255,255,0.03); }
+  .tl-year {
+    font-family: var(--serif); font-size: 36px;
+    font-weight: 900; color: var(--amber);
+    margin-bottom: 12px; line-height: 1;
+  }
+  .tl-cell h4 {
+    font-family: var(--sans); font-size: 15px;
+    font-weight: 700; margin-bottom: 10px;
+    letter-spacing: -0.2px;
+  }
+  .tl-cell p {
+    font-size: 14px; line-height: 1.65;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ===== CONTACT ===== */
+  .contact-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; margin-top: 48px;
+  }
+  .contact-card {
+    background: var(--white);
+    border: 1px solid var(--sand);
+    border-radius: 16px; padding: 36px;
+    transition: border-color 0.3s;
+  }
+  .contact-card:hover { border-color: var(--navy); }
+  .contact-card-icon {
+    width: 48px; height: 48px;
+    background: var(--paper);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px;
+  }
+  .contact-card-icon svg {
+    width: 22px; height: 22px;
+    stroke: var(--sea); fill: none;
+    stroke-width: 1.5;
+  }
+  .contact-card h4 {
+    font-family: var(--serif); font-size: 18px;
+    font-weight: 700; margin-bottom: 14px;
+    letter-spacing: -0.3px;
+  }
+  .contact-card p {
+    font-size: 14px; line-height: 1.7; color: var(--ink-soft);
+  }
+  .contact-card a {
+    color: var(--sea); text-decoration: none;
+    font-weight: 600;
+  }
+  .contact-card a:hover { text-decoration: underline; }
+  .contact-card .time-label {
+    display: block; font-weight: 700;
+    color: var(--ink); margin-top: 12px; font-size: 14px;
+  }
+  .contact-card .time-val {
+    color: var(--mid); font-size: 14px;
+  }
+
+  /* ===== CTA BANNER ===== */
+  .cta-banner {
+    margin: 0 32px 80px;
+    max-width: 1216px; margin-left: auto; margin-right: auto;
+    background: var(--navy);
+    border-radius: 24px; padding: 72px 64px;
+    display: flex; align-items: center;
+    justify-content: space-between;
+    gap: 40px; overflow: hidden; position: relative;
+  }
+  .cta-banner::before {
+    content: ''; position: absolute; right: -60px; top: -60px;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: rgba(199,140,60,0.06);
+  }
+  .cta-banner h2 {
+    font-family: var(--serif); font-size: clamp(28px, 3vw, 38px);
+    font-weight: 900; color: #fff; line-height: 1.15;
+    letter-spacing: -0.5px; position: relative;
+  }
+  .cta-banner h2 em { font-weight: 400; color: rgba(255,255,255,0.5); }
+  .cta-banner p {
+    color: rgba(255,255,255,0.55); font-size: 15px;
+    line-height: 1.6; max-width: 460px; margin-top: 12px;
+    position: relative;
+  }
+  .cta-banner .btn-rust {
+    background: var(--rust); color: #fff;
+    padding: 16px 36px; font-size: 14px;
+    border-radius: 10px; font-weight: 600;
+    text-decoration: none; display: inline-flex;
+    white-space: nowrap; position: relative;
+    transition: all 0.25s;
+  }
+  .cta-banner .btn-rust:hover {
+    background: #9e3f2e; transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(180,76,58,0.3);
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.45);
+    padding: 48px 32px;
+  }
+  .footer-inner {
+    max-width: 1280px; margin: 0 auto;
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-inner p { font-size: 13px; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a {
+    color: rgba(255,255,255,0.5); text-decoration: none;
+    font-size: 13px; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: #fff; }
+
+  /* ===== REVEAL ===== */
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .reveal.vis { opacity: 1; transform: translateY(0); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .hero { grid-template-columns: 1fr; gap: 48px; padding-top: 56px; }
+    .hero-photo-stack { height: 360px; }
+    .hero-photo-main { width: 280px; height: 360px; }
+    .hero-photo-accent { width: 160px; height: 160px; }
+    .hero-stat-float { right: 240px; top: 300px; }
+    .officers-grid { grid-template-columns: repeat(2, 1fr); }
+    .tl-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .topbar { display: none; }
+    .nav-links {
+      display: none; position: fixed; top: 68px; left: 0; right: 0;
+      background: var(--cream); flex-direction: column;
+      padding: 16px; gap: 4px;
+      border-bottom: 1px solid var(--sand);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+    }
+    .nav-links.open { display: flex; }
+    .hamburger { display: block; }
+    .hero { padding: 40px 20px 48px; }
+    .hero-photo-stack { display: none; }
+    .mission-grid { grid-template-columns: 1fr; gap: 48px; }
+    .scholarship-wrap { grid-template-columns: 1fr; padding: 40px 28px; gap: 32px; }
+    .event-card { grid-template-columns: 1fr; }
+    .event-photo { min-height: 260px; }
+    .event-body { padding: 36px; }
+    .officers-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .tl-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .section { padding: 72px 20px; }
+    .section-full { padding: 72px 0; }
+    .cta-banner {
+      flex-direction: column; text-align: center;
+      margin: 0 16px 60px; padding: 48px 28px;
+      border-radius: 16px;
+    }
+    .cta-banner p { max-width: 100%; }
+  }
+  @media (max-width: 480px) {
+    .officers-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .officer-info { padding: 12px 14px; }
+    .officer-info h4 { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <span>National Naval Officers Association — Washington DC Chapter</span>
+  <a href="mailto:dcnnoa@nnoa.org">dcnnoa@nnoa.org</a>
+</div>
+
+<!-- NAV -->
+<header id="header">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-mark">DC</div>
+      <div class="nav-logo-text">
+        <strong>DCNNOA</strong>
+        <span>Washington DC Chapter</span>
+      </div>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#mission">Mission</a>
+      <a href="#scholarship">Scholarship</a>
+      <a href="#events">Events</a>
+      <a href="#officers">Officers</a>
+      <a href="#timeline">History</a>
+      <a href="#contact">Contact</a>
+      <a href="#cta" class="nav-donate">Donate</a>
+    </nav>
+    <button class="hamburger" id="menuBtn" aria-label="Toggle menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Est. 2003 · Sea Services</div>
+    <h1>Developing <em>the Next Watch</em></h1>
+    <p class="hero-desc">Recruiting, developing, and retaining the finest officer corps in the Navy, Marine Corps, and Coast Guard through scholarships, mentorship, and community service.</p>
+    <div class="hero-actions">
+      <a href="#scholarship" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        2026 Scholarships
+      </a>
+      <a href="#mission" class="btn btn-secondary">Read the President's Message</a>
+    </div>
+  </div>
+  <div class="hero-photo-stack">
+    <div class="hero-photo-main">
+      <img src="https://nnoa.org/wp-content/uploads/2026/03/dcnnoa-2.png" alt="DCNNOA Chapter" loading="eager">
+    </div>
+    <div class="hero-photo-accent">
+      <img src="https://nnoa.org/wp-content/uploads/2026/03/VETS-DAY.jpg" alt="Veterans Day Hospital Visit" loading="eager">
+    </div>
+    <div class="hero-stat-float">
+      <strong>$1.15M</strong>
+      <span>Scholarships</span>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT STRIP -->
+<div class="impact-strip">
+  <div class="impact-scroll">
+    <div class="impact-scroll-set">
+      <div class="impact-item"><strong>$1.15M+</strong><span>Scholarships Awarded</span></div>
+      <div class="impact-item"><strong>671</strong><span>Students Supported</span></div>
+      <div class="impact-item"><strong>22 Years</strong><span>Serving the DMV</span></div>
+      <div class="impact-item"><strong>$7,000+</strong><span>Annual VA Donations</span></div>
+      <div class="impact-item"><strong>Since 2003</strong><span>Investing in Leaders</span></div>
+    </div>
+    <div class="impact-scroll-set">
+      <div class="impact-item"><strong>$1.15M+</strong><span>Scholarships Awarded</span></div>
+      <div class="impact-item"><strong>671</strong><span>Students Supported</span></div>
+      <div class="impact-item"><strong>22 Years</strong><span>Serving the DMV</span></div>
+      <div class="impact-item"><strong>$7,000+</strong><span>Annual VA Donations</span></div>
+      <div class="impact-item"><strong>Since 2003</strong><span>Investing in Leaders</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- MISSION -->
+<div class="mission-bg" id="mission">
+  <div class="section">
+    <div class="mission-grid">
+      <div class="mission-content reveal">
+        <div class="section-label">President's Message</div>
+        <h2 class="section-heading">Welcome to <em>DCNNOA</em></h2>
+        <div class="mission-quote">
+          "Our people are the asymmetrical advantage our services bring in all domains."
+        </div>
+        <div class="mission-body">
+          <p>For the past 250 years, the strength of our sea services has been central to our national security. NNOA has been a key stakeholder in recruiting, developing, and retaining the best, most capable officer corps in the Navy, Marine Corps, and Coast Guard.</p>
+          <p>DCNNOA is a premiere chapter that relentlessly promotes talent development through our annual Scholarship Program — $1.15M awarded to 671 students since 2003 — and our annual VA Hospital Visit with over $5K donated per year for essential clothing items.</p>
+          <p>Your NNOA Membership will contribute to the competitive advantage needed for the next 250 years — a sea service that can recruit and retain the nation's top talent to lead across all domains.</p>
+        </div>
+      </div>
+      <div class="mission-photo-wrap reveal">
+        <div class="mission-photo">
+          <img src="https://nnoa.org/wp-content/uploads/2026/03/dcnnoa-8.jpg" alt="DCNNOA Chapter President" loading="lazy">
+        </div>
+        <div class="mission-badge">
+          <strong>671 Students</strong>
+          <span>Scholarships Since 2003</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCHOLARSHIP -->
+<div id="scholarship">
+  <div class="section">
+    <div class="section-label reveal">Scholarship Program</div>
+    <h2 class="section-heading reveal">Invest in the <em>Next Watch</em></h2>
+    <div style="height: 32px;"></div>
+    <div class="scholarship-wrap reveal">
+      <div>
+        <div class="scholarship-big-num">$1.15<span>M+</span></div>
+        <p class="scholarship-sub">Invested in DMV high school seniors since 2003 — building the next generation of Sea Service leaders.</p>
+        <div class="status-badge">2026 Applications — Now Closed</div>
+      </div>
+      <div class="scholarship-right">
+        <p>The DCNNOA Scholarship program is open annually to DMV high school seniors. Since its founding, the program has supported 671 students pursuing education and careers in service to their country.</p>
+        <p>Our scholarships don't just fund education — they invest in the leaders who will ensure our nation's security for the next generation.</p>
+        <a href="#contact" class="btn btn-primary" style="margin-top:8px;">Get Notified for 2027</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EVENTS -->
+<div class="events-bg" id="events">
+  <div class="section">
+    <div class="section-label reveal">Operations</div>
+    <h2 class="section-heading reveal" style="margin-bottom: 40px;">Chapter <em>Events</em></h2>
+    <div class="event-card reveal">
+      <div class="event-photo">
+        <img src="https://nnoa.org/wp-content/uploads/2026/03/VETS-DAY.jpg" alt="Veterans Day Hospital Visit" loading="lazy">
+        <div class="event-photo-date">
+          <strong>11</strong>
+          <span>Nov 2025</span>
+        </div>
+      </div>
+      <div class="event-body">
+        <h3>Annual Veterans Day Hospital Visit</h3>
+        <p>DCNNOA and VFW Post 9619 conducted their annual visit to the Washington DC Veterans Hospital. Eighteen chapter members spent the morning meeting, greeting, and thanking veterans receiving medical care.</p>
+        <p>Members provided socks, knit caps, gloves, leggings, and thermal underwear to veterans in need.</p>
+        <div class="event-highlight">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          ~$7,000 in Winter Clothing Donated
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OFFICERS -->
+<div id="officers">
+  <div class="section">
+    <div class="section-label reveal">Chapter Leadership</div>
+    <h2 class="section-heading reveal">Leading the <em>Charge</em></h2>
+    <p class="section-sub reveal">The DCNNOA executive board serves with distinction, driving our mission of talent development and community service.</p>
+    <div class="officers-grid">
+      <div class="officer reveal"><div class="officer-img"><img src="https://nnoa.org/wp-content/uploads/2026/03/DCNNOA-CO.jpg" alt="Chapter President" loading="lazy"></div><div class="officer-info"><h4>Chapter President</h4><p>Executive Board</p></div></div>
+      <div class="officer reveal"><div class="officer-img"><img src="https://nnoa.org/wp-content/uploads/2026/03/DCNNOA-CO-1.jpg" alt="Vice President" loading="lazy"></div><div class="officer-info"><h4>Vice President</h4><p>Executive Board</p></div></div>
+      <div class="officer reveal"><div class="officer-img"><img src="https://nnoa.org/wp-content/uploads/2026/03/DCNNOA-CO-2.jpg" alt="Secretary" loading="lazy"></div><div class="officer-info"><h4>Secretary</h4><p>Executive Board</p></div></div>
+      <div class="officer reveal"><div class="officer-img"><img src="https://nnoa.org/wp-content/uploads/2026/03/DCNNOA-CO-3.jpg" alt="Treasurer" loading="lazy"></div><div class="officer-info"><h4>Treasurer</h4><p>Executive Board</p></div></div>
+      <div class="officer reveal"><div class="officer-img"><img src="https://nnoa.org/wp-content/uploads/2026/03/DCNNOA-CO-4.jpg" alt="Scholarship Chair" loading="lazy"></div><div class="officer-info"><h4>Scholarship Chair</h4><p>Programs</p></div></div>
+      <div class="officer reveal"><div class="officer-img"><img src="https://nnoa.org/wp-content/uploads/2026/03/DCNNOA-CO-5.jpg" alt="Programs Chair" loading="lazy"></div><div class="officer-info"><h4>Programs Chair</h4><p>Programs</p></div></div>
+      <div class="officer reveal"><div class="officer-img"><img src="https://nnoa.org/wp-content/uploads/2026/03/DCNNOA-CO-6.jpg" alt="Membership Chair" loading="lazy"></div><div class="officer-info"><h4>Membership Chair</h4><p>Operations</p></div></div>
+      <div class="officer reveal"><div class="officer-img"><img src="https://nnoa.org/wp-content/uploads/2026/03/DCNNOA-CO-7.jpg" alt="Public Affairs" loading="lazy"></div><div class="officer-info"><h4>Public Affairs Officer</h4><p>Operations</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="timeline-bg" id="timeline">
+  <div class="section">
+    <div class="section-label reveal">Our History</div>
+    <h2 class="section-heading reveal">Service <em>Timeline</em></h2>
+    <div class="tl-grid">
+      <div class="tl-cell reveal"><div class="tl-year">1972</div><h4>NNOA Founded</h4><p>Established to support minority naval officers and promote diversity in the Sea Services.</p></div>
+      <div class="tl-cell reveal"><div class="tl-year">2003</div><h4>Scholarship Launched</h4><p>DCNNOA launches its annual program for DMV high school seniors, beginning a legacy of investment.</p></div>
+      <div class="tl-cell reveal"><div class="tl-year">2010</div><h4>VA Hospital Tradition</h4><p>The annual Veterans Day hospital visit becomes a hallmark DCNNOA community event.</p></div>
+      <div class="tl-cell reveal"><div class="tl-year">2020</div><h4>Virtual Operations</h4><p>Chapter meetings transition to Zoom, ensuring continuity of mission during unprecedented times.</p></div>
+      <div class="tl-cell reveal"><div class="tl-year">2025</div><h4>$1.15M Milestone</h4><p>DCNNOA surpasses $1.15M in scholarships to 671 students. VA donations reach $7K annually.</p></div>
+      <div class="tl-cell reveal"><div class="tl-year">2026</div><h4>The Next Watch</h4><p>Continuing the mission of developing the next generation of Sea Service leaders.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact">
+  <div class="section">
+    <div class="section-label reveal">Get In Touch</div>
+    <h2 class="section-heading reveal">Meetings & <em>Contact</em></h2>
+    <div class="contact-grid">
+      <div class="contact-card reveal">
+        <div class="contact-card-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h4>Meeting Location</h4>
+        <p>Currently virtual via Zoom. Link provided by our chapter Secretary via email.</p>
+        <p style="margin-top:12px; color: var(--warm-gray); font-size: 13px;">In-person: Navy League Building, 2300 Wilson Blvd, First Floor, Arlington, VA 22201</p>
+      </div>
+      <div class="contact-card reveal">
+        <div class="contact-card-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <h4>Meeting Schedule</h4>
+        <span class="time-label">General Meetings</span>
+        <span class="time-val">3rd Tuesday · Monthly · 1830</span>
+        <span class="time-label">Executive Board</span>
+        <span class="time-val">1st Tuesday · Monthly · 1830</span>
+      </div>
+      <div class="contact-card reveal">
+        <div class="contact-card-icon">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <h4>Contact Us</h4>
+        <p><a href="mailto:dcnnoa@nnoa.org">dcnnoa@nnoa.org</a></p>
+        <p style="margin-top: 12px;">PO Box 30784<br>Alexandria, VA 22310</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA BANNER -->
+<div class="cta-banner" id="cta">
+  <div>
+    <h2>Support <em>the Mission</em></h2>
+    <p>Your contribution funds scholarships, veteran outreach, and leadership development for the next generation of Sea Service officers.</p>
+  </div>
+  <a href="mailto:dcnnoa@nnoa.org" class="btn-rust">Donate Now →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <p>&copy; 2026 DCNNOA — Washington DC Chapter, National Naval Officers Association</p>
+    <div class="footer-links">
+      <a href="#mission">Mission</a>
+      <a href="#scholarship">Scholarship</a>
+      <a href="#events">Events</a>
+      <a href="#contact">Contact</a>
+      <a href="https://nnoa.org" target="_blank" rel="noopener">NNOA National</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  document.getElementById('menuBtn').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  document.querySelectorAll('#navLinks a').forEach(a =>
+    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'))
+  );
+
+  // Header shadow on scroll
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  // Scroll reveals with stagger
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    // stagger siblings within grids
+    const parent = el.parentElement;
+    if (parent.classList.contains('officers-grid') || parent.classList.contains('contact-grid') || parent.classList.contains('tl-grid')) {
+      const idx = Array.from(parent.children).indexOf(el);
+      el.style.transitionDelay = `${idx * 0.06}s`;
+    }
+    io.observe(el);
+  });
+</script>
+</body>
+</html>
